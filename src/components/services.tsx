@@ -97,19 +97,22 @@ export function Services() {
             Service Types Available
           </p>
           <div className="mt-6 flex flex-wrap justify-center gap-4">
-            {serviceTypes.map((type, index) => (
-              <div key={type.label} className="flex items-center gap-4">
-                <div className="text-center">
-                  <p className="font-serif text-xl text-zinc-800">
-                    {type.label}
-                  </p>
-                  <p className="text-sm text-zinc-500">{type.description}</p>
+            {serviceTypes.map((type, index) => {
+              const isLast = index === serviceTypes.length - 1;
+              return (
+                <div key={type.label} className="flex items-center gap-4">
+                  <div className="text-center">
+                    <p className="font-serif text-xl text-zinc-800">
+                      {type.label}
+                    </p>
+                    <p className="text-sm text-zinc-500">{type.description}</p>
+                  </div>
+                  {!isLast && (
+                    <div className="hidden h-12 w-px bg-zinc-300 md:block" />
+                  )}
                 </div>
-                {index < serviceTypes.length - 1 && (
-                  <div className="hidden h-12 w-px bg-zinc-300 md:block" />
-                )}
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>

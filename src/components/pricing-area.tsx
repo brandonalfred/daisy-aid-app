@@ -16,10 +16,7 @@ export function PricingArea() {
     <section id="pricing" className="bg-beige-light py-16 md:py-24">
       <div className="container mx-auto px-4 md:px-8">
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
-          <Card
-            className="border-0 shadow-xl"
-            style={{ backgroundColor: '#5c5856' }}
-          >
+          <Card className="border-0 bg-dark-card shadow-xl">
             <CardContent className="p-8">
               <h2 className="font-serif text-3xl text-white">
                 Transparent Pricing

@@ -21,10 +21,7 @@ export function Hero() {
           </div>
 
           <div className="flex items-center justify-center lg:justify-end">
-            <Card
-              className="w-full max-w-md border-0 shadow-xl"
-              style={{ backgroundColor: '#5c5856' }}
-            >
+            <Card className="w-full max-w-md border-0 bg-dark-card shadow-xl">
               <CardContent className="p-8">
                 <div className="text-center">
                   <p className="text-lg text-stone-200">
@@ -45,7 +42,9 @@ export function Hero() {
                         cancel your appointment
                       </span>
                       , there&apos;s{' '}
-                      <span className="font-semibold text-white">no charge</span>{' '}
+                      <span className="font-semibold text-white">
+                        no charge
+                      </span>{' '}
                       when canceled{' '}
                       <span className="font-semibold text-white">
                         at least 24 hours in advance
