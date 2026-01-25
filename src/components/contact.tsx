@@ -1,6 +1,7 @@
 'use client';
 
 import { Mail, Phone } from 'lucide-react';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -13,6 +14,13 @@ const socialLinks = [
 ];
 
 export function Contact() {
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitted(true);
+  };
+
   return (
     <section id="contact" className="bg-beige py-16 md:py-24">
       <div className="container mx-auto px-4 md:px-8">
@@ -91,76 +99,91 @@ export function Contact() {
                   Send Us a Message
                 </h3>
 
-                <form className="mt-6 space-y-4">
-                  <div className="grid gap-4 sm:grid-cols-2">
+                {submitted ? (
+                  <div className="mt-6 rounded-lg bg-green-50 p-6 text-center">
+                    <p className="text-lg font-medium text-green-800">
+                      Thank you for your message!
+                    </p>
+                    <p className="mt-2 text-green-700">
+                      We&apos;ll get back to you as soon as possible.
+                    </p>
+                  </div>
+                ) : (
+                  <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
+                    <div className="grid gap-4 sm:grid-cols-2">
+                      <div>
+                        <label
+                          htmlFor="name"
+                          className="mb-2 block text-sm font-medium text-zinc-700"
+                        >
+                          Name
+                        </label>
+                        <Input
+                          id="name"
+                          type="text"
+                          placeholder="Your name"
+                          className="border-beige-dark bg-beige"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label
+                          htmlFor="email"
+                          className="mb-2 block text-sm font-medium text-zinc-700"
+                        >
+                          Email
+                        </label>
+                        <Input
+                          id="email"
+                          type="email"
+                          placeholder="your@email.com"
+                          className="border-beige-dark bg-beige"
+                          required
+                        />
+                      </div>
+                    </div>
+
                     <div>
                       <label
-                        htmlFor="name"
+                        htmlFor="subject"
                         className="mb-2 block text-sm font-medium text-zinc-700"
                       >
-                        Name
+                        Subject
                       </label>
                       <Input
-                        id="name"
+                        id="subject"
                         type="text"
-                        placeholder="Your name"
+                        placeholder="How can we help?"
                         className="border-beige-dark bg-beige"
+                        required
                       />
                     </div>
+
                     <div>
                       <label
-                        htmlFor="email"
+                        htmlFor="message"
                         className="mb-2 block text-sm font-medium text-zinc-700"
                       >
-                        Email
+                        Message
                       </label>
-                      <Input
-                        id="email"
-                        type="email"
-                        placeholder="your@email.com"
+                      <Textarea
+                        id="message"
+                        placeholder="Your message..."
+                        rows={4}
                         className="border-beige-dark bg-beige"
+                        required
                       />
                     </div>
-                  </div>
 
-                  <div>
-                    <label
-                      htmlFor="subject"
-                      className="mb-2 block text-sm font-medium text-zinc-700"
+                    <Button
+                      type="submit"
+                      className="w-full bg-amber-400 text-zinc-900 hover:bg-amber-300"
+                      size="lg"
                     >
-                      Subject
-                    </label>
-                    <Input
-                      id="subject"
-                      type="text"
-                      placeholder="How can we help?"
-                      className="border-beige-dark bg-beige"
-                    />
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor="message"
-                      className="mb-2 block text-sm font-medium text-zinc-700"
-                    >
-                      Message
-                    </label>
-                    <Textarea
-                      id="message"
-                      placeholder="Your message..."
-                      rows={4}
-                      className="border-beige-dark bg-beige"
-                    />
-                  </div>
-
-                  <Button
-                    type="submit"
-                    className="w-full bg-amber-400 text-zinc-900 hover:bg-amber-300"
-                    size="lg"
-                  >
-                    Send Message
-                  </Button>
-                </form>
+                      Send Message
+                    </Button>
+                  </form>
+                )}
               </CardContent>
             </Card>
           </div>
