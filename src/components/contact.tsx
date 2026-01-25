@@ -8,7 +8,6 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 
 const socialLinks = [
-  { label: 'Facebook', href: '#', icon: 'f' },
   {
     label: 'Instagram',
     href: 'https://www.instagram.com/daisyaidtransport',
