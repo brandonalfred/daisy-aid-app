@@ -18,7 +18,6 @@ const socialLinks = [
     href: 'https://www.linkedin.com/company/daisy-aid-transport-llc/',
     icon: 'in',
   },
-  { label: 'Twitter', href: '#', icon: 'x' },
 ];
 
 export function Contact() {
