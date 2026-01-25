@@ -9,7 +9,16 @@ import { Textarea } from '@/components/ui/textarea';
 
 const socialLinks = [
   { label: 'Facebook', href: '#', icon: 'f' },
-  { label: 'Instagram', href: '#', icon: 'i' },
+  {
+    label: 'Instagram',
+    href: 'https://www.instagram.com/daisyaidtransport',
+    icon: 'i',
+  },
+  {
+    label: 'LinkedIn',
+    href: 'https://www.linkedin.com/company/daisy-aid-transport-llc/',
+    icon: 'in',
+  },
   { label: 'Twitter', href: '#', icon: 'x' },
 ];
 
@@ -58,7 +67,7 @@ export function Contact() {
                   </a>
 
                   <a
-                    href="mailto:info@daisyaidnemt.com"
+                    href="mailto:info@daisyaidtransport.com"
                     className="flex items-center gap-4 rounded-lg p-3 transition-colors hover:bg-beige"
                   >
                     <div className="flex h-12 w-12 items-center justify-center rounded-full bg-amber-100">
@@ -67,7 +76,7 @@ export function Contact() {
                     <div>
                       <p className="text-sm text-zinc-500">Email</p>
                       <p className="text-lg font-medium text-zinc-900">
-                        info@daisyaidnemt.com
+                        info@daisyaidtransport.com
                       </p>
                     </div>
                   </a>
