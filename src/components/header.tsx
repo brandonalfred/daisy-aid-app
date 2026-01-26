@@ -58,7 +58,7 @@ export function Header() {
             type="button"
             className="flex items-center justify-center text-zinc-700 transition-colors hover:text-zinc-900 md:hidden"
             aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            onClick={() => setMobileMenuOpen((open) => !open)}
           >
             {mobileMenuOpen ? (
               <X className="h-6 w-6" />
