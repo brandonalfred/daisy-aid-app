@@ -1,6 +1,9 @@
-import { ShoppingCart } from 'lucide-react';
+'use client';
+
+import { Menu, ShoppingCart, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
 
 const navLinks = [
   { label: 'Store', href: '#' },
@@ -12,6 +15,16 @@ const navLinks = [
 ];
 
 export function Header() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
+  const closeMobileMenu = () => {
+    setMobileMenuOpen(false);
+  };
+
   return (
     <header className="sticky top-0 z-50 w-full bg-beige">
       <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-8">
@@ -25,6 +38,7 @@ export function Header() {
           />
         </Link>
 
+        {/* Desktop navigation */}
         <nav className="hidden items-center gap-8 md:flex">
           {navLinks.map((link) => (
             <Link
@@ -46,8 +60,43 @@ export function Header() {
             <ShoppingCart className="h-5 w-5" />
             <span className="text-sm">0</span>
           </button>
+
+          {/* Mobile menu button */}
+          <button
+            type="button"
+            className="flex items-center justify-center text-zinc-700 transition-colors hover:text-zinc-900 md:hidden"
+            aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+            onClick={toggleMobileMenu}
+          >
+            {mobileMenuOpen ? (
+              <X className="h-6 w-6" />
+            ) : (
+              <Menu className="h-6 w-6" />
+            )}
+          </button>
         </div>
       </div>
+
+      {/* Mobile navigation menu */}
+      {mobileMenuOpen && (
+        <nav className="border-t border-zinc-200 bg-beige md:hidden">
+          <div className="container mx-auto px-4 py-4">
+            <ul className="flex flex-col gap-4">
+              {navLinks.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    href={link.href}
+                    className="block py-2 text-base font-medium text-zinc-700 transition-colors hover:text-zinc-900"
+                    onClick={closeMobileMenu}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </nav>
+      )}
     </header>
   );
 }
