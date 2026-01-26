@@ -1,6 +1,6 @@
 'use client';
 
-import { Mail, Phone } from 'lucide-react';
+import { Instagram, Linkedin, Mail, Phone } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -11,12 +11,12 @@ const socialLinks = [
   {
     label: 'Instagram',
     href: 'https://www.instagram.com/daisyaidtransport',
-    icon: 'i',
+    icon: Instagram,
   },
   {
     label: 'LinkedIn',
     href: 'https://www.linkedin.com/company/daisy-aid-transport-llc/',
-    icon: 'in',
+    icon: Linkedin,
   },
 ];
 
@@ -86,10 +86,12 @@ export function Contact() {
                     <a
                       key={social.label}
                       href={social.href}
-                      className="flex h-10 w-10 items-center justify-center rounded-full border border-beige-dark bg-beige text-sm font-semibold uppercase text-zinc-600 transition-colors hover:border-amber-400 hover:text-zinc-900"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex h-10 w-10 items-center justify-center rounded-full border border-beige-dark bg-beige text-zinc-600 transition-colors hover:border-amber-400 hover:text-zinc-900"
                       aria-label={social.label}
                     >
-                      {social.icon}
+                      <social.icon className="h-5 w-5" />
                     </a>
                   ))}
                 </div>
