@@ -11,7 +11,7 @@ const navLinks = [
   { label: 'Pricing', href: '#pricing' },
   { label: 'Services', href: '#services' },
   { label: 'About', href: '#' },
-  { label: 'Social', href: '#social' },
+  { label: 'Social', href: '#contact' },
 ];
 
 export function Header() {
