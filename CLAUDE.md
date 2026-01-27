@@ -30,10 +30,30 @@ Biome enforces: 2-space indentation, single quotes, ES5 trailing commas. Run `bu
 ## Architecture
 
 - `src/app/` - Next.js App Router pages and layouts (RSC by default)
+- `src/app/api/` - API routes (booking endpoints)
 - `src/components/` - Page-level components (hero, header, footer, etc.)
+- `src/components/booking/` - Multi-step booking form components
 - `src/components/ui/` - shadcn/ui primitives (button, card, input, etc.)
-- `src/lib/` - Utilities including Prisma client and cn() helper
+- `src/lib/` - Utilities including Prisma client, Google Calendar integration, and cn() helper
+- `src/lib/validations/` - Zod schemas for API request validation
 - `prisma/schema.prisma` - Database schema
+
+## Booking System
+
+The app features a medical transportation booking system with Google Calendar integration.
+
+**Key files:**
+- `src/lib/google-calendar.ts` - Calendar API client, busy time queries, slot generation
+- `src/lib/booking-config.ts` - Business hours, timezone (America/Chicago), slot duration
+- `src/app/api/booking/route.ts` - POST to create bookings
+- `src/app/api/booking/slots/route.ts` - GET available time slots for a date
+
+**Flow:** Client requests slots for a date → API checks Google Calendar busy times + existing DB bookings → returns availability → client submits booking → API validates slot still available → creates Booking record.
+
+**Environment variables:**
+- `DATABASE_URL` - PostgreSQL connection string
+- `GOOGLE_SERVICE_ACCOUNT_KEY` - JSON service account credentials (newlines escaped as `\n`)
+- `GOOGLE_CALENDAR_ID` - Calendar to check for conflicts
 
 ## Path Aliases
 
