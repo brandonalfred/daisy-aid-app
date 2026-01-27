@@ -188,6 +188,7 @@ export function BookingForm() {
           <button
             type="button"
             onClick={() => {
+              setSelectedDate(null);
               setSelectedSlot(null);
               setStep('date');
             }}
