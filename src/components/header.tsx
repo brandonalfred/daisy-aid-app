@@ -1,6 +1,6 @@
 'use client';
 
-import { Menu, ShoppingCart, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -43,30 +43,19 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-4">
-          <button
-            type="button"
-            className="flex items-center gap-2 text-zinc-700 transition-colors hover:text-zinc-900"
-            aria-label="Shopping cart"
-          >
-            <ShoppingCart className="h-5 w-5" />
-            <span className="text-sm">0</span>
-          </button>
-
-          {/* Mobile menu button */}
-          <button
-            type="button"
-            className="flex items-center justify-center text-zinc-700 transition-colors hover:text-zinc-900 md:hidden"
-            aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
-            onClick={() => setMobileMenuOpen((open) => !open)}
-          >
-            {mobileMenuOpen ? (
-              <X className="h-6 w-6" />
-            ) : (
-              <Menu className="h-6 w-6" />
-            )}
-          </button>
-        </div>
+        {/* Mobile menu button */}
+        <button
+          type="button"
+          className="flex items-center justify-center text-zinc-700 transition-colors hover:text-zinc-900 md:hidden"
+          aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        >
+          {mobileMenuOpen ? (
+            <X className="h-6 w-6" />
+          ) : (
+            <Menu className="h-6 w-6" />
+          )}
+        </button>
       </div>
 
       {/* Mobile navigation menu */}
