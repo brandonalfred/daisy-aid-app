@@ -4,9 +4,9 @@ import { Card, CardContent } from '@/components/ui/card';
 
 export default function BookingPage() {
   return (
-    <div className="min-h-screen bg-beige">
+    <div className="flex min-h-screen flex-col bg-beige">
       <Header />
-      <main className="flex min-h-[60vh] items-center justify-center px-4 py-16">
+      <main className="flex flex-1 items-center justify-center px-4 py-16">
         <Card className="w-full max-w-md border-0 bg-dark-card shadow-xl">
           <CardContent className="p-8 text-center">
             <h1 className="font-serif text-3xl font-normal text-white md:text-4xl">
