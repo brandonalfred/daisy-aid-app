@@ -35,7 +35,7 @@ export function DatePicker({
               type="button"
               onClick={() => onDateSelect(date)}
               className={cn(
-                'flex flex-col items-center rounded-lg border p-2 transition-colors',
+                'flex flex-col items-center cursor-pointer rounded-lg border p-2 transition-colors',
                 isSelected
                   ? 'border-primary bg-primary text-primary-foreground'
                   : 'border-stone-600 bg-stone-700 text-stone-200 hover:border-stone-500 hover:bg-stone-600'
