@@ -1,6 +1,7 @@
 import { format, parseISO } from 'date-fns';
 import { toZonedTime } from 'date-fns-tz';
 import { NextResponse } from 'next/server';
+import { formatError } from '@/lib/api-utils';
 import { CALENDAR_CONFIG } from '@/lib/booking-config';
 import {
   generateTimeSlots,
@@ -14,10 +15,6 @@ import { bookingFormSchema } from '@/lib/validations/booking';
 
 const CALENDAR_ID = (process.env.GOOGLE_CALENDAR_ID || 'primary').trim();
 const { timezone: TIMEZONE } = CALENDAR_CONFIG;
-
-function formatError(error: unknown): string {
-  return error instanceof Error ? error.message : String(error);
-}
 
 export async function POST(request: Request) {
   try {
