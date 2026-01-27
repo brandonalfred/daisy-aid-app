@@ -1,3 +1,5 @@
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 
 export function Hero() {
@@ -24,6 +26,13 @@ export function Hero() {
             <Card className="w-full max-w-md border-0 bg-dark-card shadow-xl">
               <CardContent className="p-8">
                 <div className="text-center">
+                  <Button
+                    asChild
+                    size="lg"
+                    className="mb-6 bg-amber-400 text-zinc-900 hover:bg-amber-300"
+                  >
+                    <Link href="/booking">Book Now</Link>
+                  </Button>
                   <p className="text-lg text-stone-200">
                     Call us at{' '}
                     <a
