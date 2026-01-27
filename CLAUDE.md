@@ -27,6 +27,13 @@ bun run type-check   # TypeScript type checking
 
 Biome enforces: 2-space indentation, single quotes, ES5 trailing commas. Run `bun run lint` to auto-fix.
 
+## Git Workflow
+
+When creating new features or starting new work:
+1. Start from a fresh `main` branch: `git checkout main && git pull origin main`
+2. Create a new feature branch: `git checkout -b feature/<description>`
+3. Use conventional commit prefixes: `feat:`, `fix:`, `docs:`, `refactor:`, etc.
+
 ## Architecture
 
 - `src/app/` - Next.js App Router pages and layouts (RSC by default)
