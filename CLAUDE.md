@@ -76,4 +76,33 @@ bunx prisma db push                              # Sync schema without migration
 bunx prisma generate                             # Regenerate Prisma client
 ```
 
-Never manually write migration SQL files. Let Prisma generate them from schema changes.
+### Migration Guidelines
+
+**ALWAYS use Prisma commands for migrations.** Never manually write or edit migration SQL files. Let Prisma generate them from schema changes.
+
+**Workflow for schema changes:**
+1. Edit `prisma/schema.prisma` with your changes
+2. Run `bunx prisma migrate dev --name <descriptive_name>`
+3. Prisma will generate the migration SQL and apply it
+4. Commit both the schema changes and the generated migration files
+
+**If a migration fails:**
+1. Read the error message carefully to understand the issue
+2. **Do NOT manually edit the generated migration SQL**
+3. Common fixes:
+   - **Schema syntax error:** Fix the schema.prisma file and re-run the migrate command
+   - **Conflicting migration:** Run `bunx prisma migrate reset` (dev only - this drops the database)
+   - **Data constraint violation:** Add default values or make fields optional in schema, then migrate
+   - **Migration drift:** Run `bunx prisma migrate dev` to reconcile
+4. If the migration created files but failed to apply:
+   - Delete the failed migration folder from `prisma/migrations/`
+   - Fix the underlying issue in the schema
+   - Run the migrate command again
+5. After fixing, always verify with `bunx prisma generate` to ensure the client is in sync
+
+**Never do these:**
+- Manually write SQL migration files
+- Edit generated migration SQL after creation
+- Use `prisma db push` in production or for permanent changes
+- Skip committing migration files to version control
+- **NEVER run `bunx prisma migrate reset` or `bunx prisma migrate reset --force` against production** - this drops all data
