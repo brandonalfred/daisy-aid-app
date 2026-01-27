@@ -64,7 +64,7 @@ export function Services() {
             <CardContent className="p-6 text-center">
               <div className="font-serif text-4xl text-zinc-800">NEMT</div>
               <p className="mt-2 text-lg font-medium text-zinc-700">
-                Non-Emergency Transport
+                Non-Emergency Medical Transport
               </p>
               <p className="mt-2 text-sm text-zinc-600">
                 Safe, reliable medical transportation services
