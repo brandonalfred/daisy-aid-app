@@ -9,7 +9,10 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true
+      "recommended": true,
+      "suspicious": {
+        "noTsIgnore": "error"
+      }
     }
   },
   "javascript": {
@@ -25,6 +28,12 @@
     }
   },
   "files": {
-    "includes": ["**", "!**/node_modules", "!**/.next", "!**/dist"]
+    "includes": [
+      "**",
+      "!**/node_modules",
+      "!**/.next",
+      "!**/dist",
+      "!next-env.d.ts"
+    ]
   }
 }
