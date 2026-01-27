@@ -9,6 +9,7 @@ bun dev              # Start development server (localhost:3000)
 bun run build        # Production build
 bun run lint         # Lint and auto-fix with Biome
 bun run lint:check   # Lint without fixing (CI)
+bun run lint:prisma  # Lint Prisma schema
 bun run type-check   # TypeScript type checking
 ```
 
@@ -20,7 +21,7 @@ bun run type-check   # TypeScript type checking
 - **Biome** for linting/formatting (not ESLint/Prettier)
 - **Tailwind CSS v4** with new `@theme inline` syntax in globals.css
 - **shadcn/ui** components (new-york style) - add via `bunx shadcn@latest add <component>`
-- **Prisma** with PostgreSQL for database
+- **Prisma 7** with PostgreSQL for database (config in `prisma.config.ts`)
 
 ## Code Style
 
@@ -37,3 +38,22 @@ Biome enforces: 2-space indentation, single quotes, ES5 trailing commas. Run `bu
 ## Path Aliases
 
 Use `@/` for imports from `src/` (e.g., `@/components/ui/button`, `@/lib/utils`).
+
+## Prisma 7
+
+Configuration is in `prisma.config.ts` (root directory). Database URL is loaded from `DATABASE_URL` env var.
+
+**Schema conventions:**
+- Use camelCase for field names in code
+- Add `@map("snake_case")` for database columns
+- Add `@@map("table_name")` for table names
+- Run `bun run lint:prisma` to verify naming conventions
+
+**Commands:**
+```bash
+bunx prisma migrate dev --name <migration_name>  # Create and apply migration
+bunx prisma db push                              # Sync schema without migration (dev only)
+bunx prisma generate                             # Regenerate Prisma client
+```
+
+Never manually write migration SQL files. Let Prisma generate them from schema changes.
