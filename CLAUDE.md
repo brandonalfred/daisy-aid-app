@@ -76,6 +76,17 @@ bunx prisma db push                              # Sync schema without migration
 bunx prisma generate                             # Regenerate Prisma client
 ```
 
+### Avoiding Migration Drift
+
+**CRITICAL:** Always use `prisma migrate dev` instead of `prisma db push` for schema changes.
+
+- `prisma migrate dev` → Creates migration files + applies to DB (use this!)
+- `prisma db push` → Applies to DB only, NO migration files (causes drift!)
+
+**What causes drift:** Using `db push` syncs your database but doesn't create migration files. This creates a mismatch between migration history and actual database state. Production deployments rely on migration files, so changes made with `db push` won't be applied in production.
+
+**If you accidentally used `db push`:** Immediately run `prisma migrate dev` to capture the changes in a migration file.
+
 ### Migration Guidelines
 
 **ALWAYS use Prisma commands for migrations.** Never manually write or edit migration SQL files. Let Prisma generate them from schema changes.
