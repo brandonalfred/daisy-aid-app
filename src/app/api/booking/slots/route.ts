@@ -13,6 +13,10 @@ import { slotsQuerySchema } from '@/lib/validations/booking';
 const CALENDAR_ID = (process.env.GOOGLE_CALENDAR_ID || 'primary').trim();
 const { timezone: TIMEZONE } = CALENDAR_CONFIG;
 
+function formatError(error: unknown): string {
+  return error instanceof Error ? error.message : String(error);
+}
+
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
@@ -41,10 +45,8 @@ export async function GET(request: Request) {
         );
       }
     } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : String(error);
       console.error(
-        `[Slots API] Failed to fetch calendar busy times: calendar=${CALENDAR_ID}, date=${parsed.data.date}, error=${errorMessage}`,
+        `[Slots API] Failed to fetch calendar busy times: calendar=${CALENDAR_ID}, date=${parsed.data.date}, error=${formatError(error)}`,
         error
       );
       calendarError = 'Unable to verify calendar availability';

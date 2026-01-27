@@ -15,6 +15,10 @@ import { bookingFormSchema } from '@/lib/validations/booking';
 const CALENDAR_ID = (process.env.GOOGLE_CALENDAR_ID || 'primary').trim();
 const { timezone: TIMEZONE } = CALENDAR_CONFIG;
 
+function formatError(error: unknown): string {
+  return error instanceof Error ? error.message : String(error);
+}
+
 export async function POST(request: Request) {
   try {
     const body = await request.json();
@@ -27,15 +31,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const {
-      firstName,
-      lastName,
-      email,
-      phone,
-      pickupAddress,
-      dropoffAddress,
-      appointmentStart,
-    } = parsed.data;
+    const { appointmentStart, ...contactInfo } = parsed.data;
 
     const appointmentDate = parseISO(appointmentStart);
     const appointmentDateCST = toZonedTime(appointmentDate, TIMEZONE);
@@ -47,8 +43,8 @@ export async function POST(request: Request) {
     );
 
     const baseSlots = generateTimeSlots(dateOnly);
-    const isValidSlot = baseSlots.some((slot) => slot.start === slotStart);
-    if (!isValidSlot) {
+    const matchedSlot = baseSlots.find((slot) => slot.start === slotStart);
+    if (!matchedSlot) {
       return NextResponse.json(
         { error: 'Invalid time slot. Please select a valid time.' },
         { status: 400 }
@@ -59,15 +55,12 @@ export async function POST(request: Request) {
     try {
       busyTimes = await getCalendarBusyTimes(dateOnly, CALENDAR_ID);
     } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : String(error);
       console.error(
-        `[Booking API] Failed to fetch calendar busy times: calendar=${CALENDAR_ID}, date=${format(dateOnly, 'yyyy-MM-dd')}, error=${errorMessage}`,
+        `[Booking API] Failed to fetch calendar busy times: calendar=${CALENDAR_ID}, date=${format(dateOnly, 'yyyy-MM-dd')}, error=${formatError(error)}`,
         error
       );
     }
 
-    const slotEnd = baseSlots.find((s) => s.start === slotStart)?.end ?? '';
     const slotStartUTC = parseSlotToUTC(dateOnly, slotStart);
     const slotEndUTC = parseSlotEndToUTC(dateOnly, slotStart);
 
@@ -81,7 +74,7 @@ export async function POST(request: Request) {
 
     const available = isSlotAvailable(
       slotStart,
-      slotEnd,
+      matchedSlot.end,
       dateOnly,
       busyTimes,
       existingBookings
@@ -98,12 +91,7 @@ export async function POST(request: Request) {
 
     const booking = await prisma.booking.create({
       data: {
-        firstName,
-        lastName,
-        email,
-        phone,
-        pickupAddress,
-        dropoffAddress,
+        ...contactInfo,
         appointmentStart: slotStartUTC,
         appointmentEnd: slotEndUTC,
         status: 'PENDING',

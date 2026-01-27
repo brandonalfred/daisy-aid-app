@@ -12,6 +12,8 @@ import { DatePicker } from './date-picker';
 import { TimeSlotPicker } from './time-slot-picker';
 
 const { timezone: TIMEZONE } = CALENDAR_CONFIG;
+const INPUT_CLASS =
+  'border-stone-600 bg-stone-700 text-white placeholder:text-stone-400';
 
 interface BookingFormData {
   firstName: string;
@@ -22,20 +24,22 @@ interface BookingFormData {
   dropoffAddress: string;
 }
 
+const INITIAL_FORM_DATA: BookingFormData = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  phone: '',
+  pickupAddress: '',
+  dropoffAddress: '',
+};
+
 type Step = 'date' | 'time' | 'details' | 'confirmation';
 
 export function BookingForm() {
   const [step, setStep] = useState<Step>('date');
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
-  const [formData, setFormData] = useState<BookingFormData>({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    pickupAddress: '',
-    dropoffAddress: '',
-  });
+  const [formData, setFormData] = useState<BookingFormData>(INITIAL_FORM_DATA);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [bookingId, setBookingId] = useState<string | null>(null);
@@ -144,14 +148,7 @@ export function BookingForm() {
             setStep('date');
             setSelectedDate(null);
             setSelectedSlot(null);
-            setFormData({
-              firstName: '',
-              lastName: '',
-              email: '',
-              phone: '',
-              pickupAddress: '',
-              dropoffAddress: '',
-            });
+            setFormData(INITIAL_FORM_DATA);
             setBookingId(null);
           }}
           variant="outline"
@@ -245,7 +242,7 @@ export function BookingForm() {
                 value={formData.firstName}
                 onChange={(e) => handleInputChange('firstName', e.target.value)}
                 required
-                className="border-stone-600 bg-stone-700 text-white placeholder:text-stone-400"
+                className={INPUT_CLASS}
               />
             </div>
             <div className="space-y-2">
@@ -257,7 +254,7 @@ export function BookingForm() {
                 value={formData.lastName}
                 onChange={(e) => handleInputChange('lastName', e.target.value)}
                 required
-                className="border-stone-600 bg-stone-700 text-white placeholder:text-stone-400"
+                className={INPUT_CLASS}
               />
             </div>
           </div>
@@ -272,7 +269,7 @@ export function BookingForm() {
               value={formData.email}
               onChange={(e) => handleInputChange('email', e.target.value)}
               required
-              className="border-stone-600 bg-stone-700 text-white placeholder:text-stone-400"
+              className={INPUT_CLASS}
             />
           </div>
 
@@ -287,7 +284,7 @@ export function BookingForm() {
               onChange={(e) => handleInputChange('phone', e.target.value)}
               placeholder="832-555-1234"
               required
-              className="border-stone-600 bg-stone-700 text-white placeholder:text-stone-400"
+              className={INPUT_CLASS}
             />
           </div>
 
@@ -300,7 +297,7 @@ export function BookingForm() {
               value={formData.pickupAddress}
               onChange={(value) => handleInputChange('pickupAddress', value)}
               placeholder="Enter pickup address"
-              className="border-stone-600 bg-stone-700 text-white placeholder:text-stone-400"
+              className={INPUT_CLASS}
             />
           </div>
 
@@ -313,7 +310,7 @@ export function BookingForm() {
               value={formData.dropoffAddress}
               onChange={(value) => handleInputChange('dropoffAddress', value)}
               placeholder="Enter dropoff address"
-              className="border-stone-600 bg-stone-700 text-white placeholder:text-stone-400"
+              className={INPUT_CLASS}
             />
           </div>
 

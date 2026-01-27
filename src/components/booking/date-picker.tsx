@@ -20,7 +20,6 @@ export function DatePicker({
     addDays(today, i + 1)
   ).filter((date) => {
     const day = date.getDay();
-    // Exclude weekends: 0 = Sunday, 6 = Saturday
     return day !== 0 && day !== 6;
   });
 
