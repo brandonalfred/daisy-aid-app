@@ -34,7 +34,7 @@ export function Hero() {
                     <Link href="/booking">Book Now</Link>
                   </Button>
                   <p className="text-lg text-stone-200">
-                    Call us at{' '}
+                    Or call us at{' '}
                     <a
                       href="tel:832-598-4858"
                       className="font-bold text-white hover:underline"
