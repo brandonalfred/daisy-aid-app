@@ -35,6 +35,22 @@ When creating new features or starting new work:
 2. Create a new feature branch: `git checkout -b feature/<description>`
 3. Use conventional commit prefixes: `feat:`, `fix:`, `docs:`, `refactor:`, etc.
 
+## Custom Skills
+
+This project has custom skills in `.claude/skills/`:
+
+### /pr - Create Pull Request
+Commits changes, pushes branch, and creates a PR with standardized format.
+- PR descriptions use "What" and "Why" sections only
+- **No test plan section** should be included
+- Title taken from commit message
+- Base branch: `main`
+
+### /draft-pr - Create Draft Pull Request
+Same as `/pr` but creates a draft PR (`gh pr create --draft`).
+- Use for work-in-progress PRs that aren't ready for review
+- Same description format: "What" and "Why" only, no test plan
+
 ## Architecture
 
 - `src/app/` - Next.js App Router pages and layouts (RSC by default)
