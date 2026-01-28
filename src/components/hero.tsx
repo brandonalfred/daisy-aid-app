@@ -26,11 +26,7 @@ export function Hero() {
             <Card className="w-full max-w-md border-0 bg-dark-card shadow-xl">
               <CardContent className="p-8">
                 <div className="text-center">
-                  <Button
-                    asChild
-                    size="lg"
-                    className="mb-6 bg-amber-400 text-zinc-900 hover:bg-amber-300"
-                  >
+                  <Button asChild variant="cta" size="lg" className="mb-6">
                     <Link href="/booking">Book Now</Link>
                   </Button>
                   <p className="text-lg text-stone-200">
