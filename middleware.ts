@@ -6,7 +6,7 @@ export default auth((req) => {
   const isAuthenticated = !!req.auth;
 
   if (isLoginPage && isAuthenticated) {
-    return NextResponse.redirect(new URL('/admin/dashboard', req.url));
+    return NextResponse.redirect(new URL('/admin/bookings', req.url));
   }
 
   if (!isLoginPage && !isAuthenticated) {
