@@ -186,7 +186,7 @@ export function BookingsList({ bookings }: BookingsListProps) {
             placeholder="Search by name or email..."
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
-            className="w-full pl-9 sm:w-64"
+            className="w-full border-stone-300 pl-9 sm:w-64"
           />
         </div>
         <div className="flex flex-wrap gap-2">
@@ -194,7 +194,7 @@ export function BookingsList({ bookings }: BookingsListProps) {
             value={status}
             onValueChange={(v) => updateParams('status', v)}
           >
-            <SelectTrigger className="w-36">
+            <SelectTrigger className="w-36 border-stone-300">
               <SelectValue placeholder="Status" />
             </SelectTrigger>
             <SelectContent>
@@ -209,7 +209,7 @@ export function BookingsList({ bookings }: BookingsListProps) {
             value={datePreset}
             onValueChange={(v) => updateParams('date', v)}
           >
-            <SelectTrigger className="w-36">
+            <SelectTrigger className="w-36 border-stone-300">
               <SelectValue placeholder="Date range" />
             </SelectTrigger>
             <SelectContent>
@@ -221,7 +221,7 @@ export function BookingsList({ bookings }: BookingsListProps) {
             </SelectContent>
           </Select>
           <Select value={sort} onValueChange={(v) => updateParams('sort', v)}>
-            <SelectTrigger className="w-36">
+            <SelectTrigger className="w-36 border-stone-300">
               <SelectValue placeholder="Sort by" />
             </SelectTrigger>
             <SelectContent>

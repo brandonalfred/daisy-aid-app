@@ -1,8 +1,18 @@
 import { z } from 'zod';
 
+function capitalizeFirstLetter(name: string): string {
+  return name.charAt(0).toUpperCase() + name.slice(1);
+}
+
 export const bookingFormSchema = z.object({
-  firstName: z.string().min(1, 'First name is required'),
-  lastName: z.string().min(1, 'Last name is required'),
+  firstName: z
+    .string()
+    .min(1, 'First name is required')
+    .transform(capitalizeFirstLetter),
+  lastName: z
+    .string()
+    .min(1, 'Last name is required')
+    .transform(capitalizeFirstLetter),
   email: z.string().email('Invalid email address'),
   phone: z.string().min(10, 'Phone number must be at least 10 digits'),
   pickupAddress: z.string().min(5, 'Pickup address is required'),
