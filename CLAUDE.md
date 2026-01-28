@@ -22,6 +22,7 @@ bun run type-check   # TypeScript type checking
 - **Tailwind CSS v4** with new `@theme inline` syntax in globals.css
 - **shadcn/ui** components (new-york style) - add via `bunx shadcn@latest add <component>`
 - **Prisma 7** with PostgreSQL for database (config in `prisma.config.ts`)
+- **NextAuth v5** (beta) for admin authentication with Google OAuth
 
 ## Code Style
 
@@ -37,12 +38,15 @@ When creating new features or starting new work:
 ## Architecture
 
 - `src/app/` - Next.js App Router pages and layouts (RSC by default)
-- `src/app/api/` - API routes (booking endpoints)
+- `src/app/api/` - API routes (booking and auth endpoints)
+- `src/app/admin/` - Admin portal with route groups for auth flow
 - `src/components/` - Page-level components (hero, header, footer, etc.)
 - `src/components/booking/` - Multi-step booking form components
+- `src/components/admin/` - Admin-specific components (sidebar, booking management)
 - `src/components/ui/` - shadcn/ui primitives (button, card, input, etc.)
 - `src/lib/` - Utilities including Prisma client, Google Calendar integration, and cn() helper
 - `src/lib/validations/` - Zod schemas for API request validation
+- `auth.ts` - NextAuth v5 configuration (root directory)
 - `prisma/schema.prisma` - Database schema
 
 ## Booking System
@@ -57,10 +61,32 @@ The app features a medical transportation booking system with Google Calendar in
 
 **Flow:** Client requests slots for a date → API checks Google Calendar busy times + existing DB bookings → returns availability → client submits booking → API validates slot still available → creates Booking record.
 
-**Environment variables:**
+## Admin System
+
+Admin portal at `/admin` with Google SSO authentication. Only pre-registered admins (in the `Admin` table) can log in.
+
+**Route structure:**
+- `/admin` - Redirects to login or dashboard based on auth state
+- `/admin/login` - Google OAuth sign-in page
+- `/admin/(authenticated)/` - Protected route group requiring valid session
+  - `dashboard/` - Admin dashboard
+  - `bookings/` - Booking management list
+  - `bookings/[id]/` - Individual booking detail/edit
+
+**Auth flow:** Google OAuth → `signIn` callback checks if email exists in Admin table → session enriched with admin details via JWT callback.
+
+**Key files:**
+- `auth.ts` - NextAuth configuration with Google provider and admin validation
+- `src/app/admin/(authenticated)/layout.tsx` - Server-side auth check, redirects unauthenticated users
+
+## Environment Variables
+
 - `DATABASE_URL` - PostgreSQL connection string
-- `GOOGLE_SERVICE_ACCOUNT_KEY` - JSON service account credentials (newlines escaped as `\n`)
+- `GOOGLE_SERVICE_ACCOUNT_KEY` - JSON service account credentials for Calendar API (newlines escaped as `\n`)
 - `GOOGLE_CALENDAR_ID` - Calendar to check for conflicts
+- `AUTH_SECRET` - NextAuth secret (generate with `openssl rand -base64 32`)
+- `AUTH_GOOGLE_ID` - Google OAuth client ID
+- `AUTH_GOOGLE_SECRET` - Google OAuth client secret
 
 ## Path Aliases
 
