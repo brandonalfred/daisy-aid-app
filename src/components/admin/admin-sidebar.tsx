@@ -97,16 +97,21 @@ export function AdminSidebar({ user, signOutAction }: AdminSidebarProps) {
 
   return (
     <>
+      {/* Desktop: Fixed sidebar */}
       <aside className="hidden w-60 shrink-0 border-r bg-background md:block">
         <SidebarContent user={user} signOutAction={signOutAction} />
       </aside>
 
-      <div className="flex h-14 items-center border-b bg-background px-4 md:hidden">
+      {/* Mobile: Menu button integrated via Sheet (no extra bar) */}
+      <div className="fixed bottom-4 left-4 z-50 md:hidden">
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger asChild>
-            <Button variant="ghost" size="icon">
+            <Button
+              size="icon"
+              className="h-12 w-12 rounded-full shadow-lg"
+            >
               <Menu className="h-5 w-5" />
-              <span className="sr-only">Toggle menu</span>
+              <span className="sr-only">Open admin menu</span>
             </Button>
           </SheetTrigger>
           <SheetContent side="left" className="w-60 p-0">
@@ -120,7 +125,6 @@ export function AdminSidebar({ user, signOutAction }: AdminSidebarProps) {
             />
           </SheetContent>
         </Sheet>
-        <span className="ml-3 font-medium">Admin</span>
       </div>
     </>
   );
