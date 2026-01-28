@@ -1,6 +1,6 @@
 'use client';
 
-import { Plus, Search } from 'lucide-react';
+import { ChevronDown, ChevronRight, Plus, Search } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import {
   useCallback,
@@ -10,6 +10,7 @@ import {
   useTransition,
 } from 'react';
 import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import {
   Select,
@@ -77,6 +78,7 @@ export function AdminsList({ admins }: AdminsListProps) {
   const search = searchParams.get('search') || '';
 
   const [searchInput, setSearchInput] = useState(search);
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
   const updateParams = useCallback(
     (key: string, value: string): void => {
@@ -148,19 +150,82 @@ export function AdminsList({ admins }: AdminsListProps) {
     return result;
   }, [admins, statusFilter, sort, search]);
 
+  const hasActiveFilters = statusFilter !== 'active' || sort !== 'date-desc';
+
   return (
     <div className="space-y-4">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      {/* Search and Filters */}
+      <div className="space-y-3">
+        {/* Search - always visible */}
         <div className="relative">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
             placeholder="Search by name or email..."
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
-            className="w-full pl-9 sm:w-64 border-2 border-gray-300 focus-visible:border-primary"
+            className="w-full pl-9 border-2 border-gray-300 focus-visible:border-primary"
           />
         </div>
-        <div className="flex flex-wrap gap-2">
+
+        {/* Mobile: Collapsible filters + Add button */}
+        <div className="flex gap-2 md:hidden">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setFiltersOpen(!filtersOpen)}
+            className="flex-1 justify-between border-2 border-gray-300"
+          >
+            <span className="flex items-center gap-2">
+              Filters
+              {hasActiveFilters && (
+                <span className="h-2 w-2 rounded-full bg-primary" />
+              )}
+            </span>
+            {filtersOpen ? (
+              <ChevronDown className="h-4 w-4" />
+            ) : (
+              <ChevronRight className="h-4 w-4" />
+            )}
+          </Button>
+          <Button onClick={() => setCreateDialogOpen(true)}>
+            <Plus className="mr-2 h-4 w-4" />
+            Add
+          </Button>
+        </div>
+        {filtersOpen && (
+          <div className="flex flex-col gap-2 md:hidden">
+            <Select
+              value={statusFilter}
+              onValueChange={(v) => updateParams('status', v)}
+            >
+              <SelectTrigger className="w-full border-2 border-gray-300 focus-visible:border-primary">
+                <SelectValue placeholder="Status" />
+              </SelectTrigger>
+              <SelectContent>
+                {STATUS_OPTIONS.map((option) => (
+                  <SelectItem key={option.value} value={option.value}>
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <Select value={sort} onValueChange={(v) => updateParams('sort', v)}>
+              <SelectTrigger className="w-full border-2 border-gray-300 focus-visible:border-primary">
+                <SelectValue placeholder="Sort by" />
+              </SelectTrigger>
+              <SelectContent>
+                {SORT_OPTIONS.map((option) => (
+                  <SelectItem key={option.value} value={option.value}>
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        )}
+
+        {/* Desktop: Inline filters */}
+        <div className="hidden md:flex md:flex-wrap md:gap-2">
           <Select
             value={statusFilter}
             onValueChange={(v) => updateParams('status', v)}
@@ -195,7 +260,37 @@ export function AdminsList({ admins }: AdminsListProps) {
         </div>
       </div>
 
-      <div className="rounded-md border bg-background">
+      {/* Mobile: Card-based list */}
+      <div className="space-y-3 md:hidden">
+        {filteredAdmins.length === 0 ? (
+          <Card className="p-6 text-center text-muted-foreground">
+            No admins found.
+          </Card>
+        ) : (
+          filteredAdmins.map((admin) => (
+            <Card
+              key={admin.id}
+              className="cursor-pointer p-4 transition-colors hover:bg-muted/50 active:bg-muted"
+              onClick={() => router.push(`/admin-tooling/admins/${admin.id}`)}
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0 flex-1">
+                  <p className="font-medium">
+                    {admin.firstName} {admin.lastName}
+                  </p>
+                  <p className="mt-1 truncate text-sm text-muted-foreground">
+                    {admin.email}
+                  </p>
+                </div>
+                <AdminStatusBadge deletedAt={admin.deletedAt} />
+              </div>
+            </Card>
+          ))
+        )}
+      </div>
+
+      {/* Desktop: Table view */}
+      <div className="hidden rounded-md border bg-background md:block">
         <Table>
           <TableHeader>
             <TableRow>
