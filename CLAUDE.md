@@ -55,7 +55,7 @@ Same as `/pr` but creates a draft PR (`gh pr create --draft`).
 
 - `src/app/` - Next.js App Router pages and layouts (RSC by default)
 - `src/app/api/` - API routes (booking and auth endpoints)
-- `src/app/admin/` - Admin portal with route groups for auth flow
+- `src/app/admin-tooling/` - Admin portal with route groups for auth flow
 - `src/components/` - Page-level components (hero, header, footer, etc.)
 - `src/components/booking/` - Multi-step booking form components
 - `src/components/admin/` - Admin-specific components (sidebar, booking management)
@@ -79,12 +79,12 @@ The app features a medical transportation booking system with Google Calendar in
 
 ## Admin System
 
-Admin portal at `/admin` with Google SSO authentication. Only pre-registered admins (in the `Admin` table) can log in.
+Admin portal at `/admin-tooling` with Google SSO authentication. Only pre-registered admins (in the `Admin` table) can log in.
 
 **Route structure:**
-- `/admin` - Redirects to login or dashboard based on auth state
-- `/admin/login` - Google OAuth sign-in page
-- `/admin/(authenticated)/` - Protected route group requiring valid session
+- `/admin-tooling` - Redirects to login or dashboard based on auth state
+- `/admin-tooling/login` - Google OAuth sign-in page
+- `/admin-tooling/(authenticated)/` - Protected route group requiring valid session
   - `dashboard/` - Admin dashboard
   - `bookings/` - Booking management list
   - `bookings/[id]/` - Individual booking detail/edit
@@ -93,7 +93,7 @@ Admin portal at `/admin` with Google SSO authentication. Only pre-registered adm
 
 **Key files:**
 - `auth.ts` - NextAuth configuration with Google provider and admin validation
-- `src/app/admin/(authenticated)/layout.tsx` - Server-side auth check, redirects unauthenticated users
+- `src/app/admin-tooling/(authenticated)/layout.tsx` - Server-side auth check, redirects unauthenticated users
 
 ## Environment Variables
 
