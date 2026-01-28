@@ -72,7 +72,7 @@ export function Contact() {
                   </div>
                   <div>
                     <p className="text-sm text-zinc-500">Email</p>
-                    <p className="text-lg font-medium text-zinc-900 break-all">
+                    <p className="text-base md:text-lg font-medium text-zinc-900 break-all">
                       info@daisyaidtransport.com
                     </p>
                   </div>
