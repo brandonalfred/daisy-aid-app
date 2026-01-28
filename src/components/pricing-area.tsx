@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { MapPin, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -66,13 +67,13 @@ export function PricingArea() {
                 ))}
               </div>
 
-              <div className="mt-8 overflow-hidden rounded-xl bg-beige-dark">
-                <div className="flex h-48 items-center justify-center text-stone-500">
-                  <div className="text-center">
-                    <div className="text-4xl">🗺️</div>
-                    <p className="mt-2 text-sm font-medium">Houston Area Map</p>
-                  </div>
-                </div>
+              <div className="relative mt-8 h-64 overflow-hidden rounded-xl bg-beige-dark">
+                <Image
+                  src="/houston-map.jpg"
+                  alt="Houston area service map showing Harris, Fort Bend, Montgomery, Brazoria, Galveston, and Waller counties"
+                  fill
+                  className="object-cover"
+                />
               </div>
             </CardContent>
           </Card>
