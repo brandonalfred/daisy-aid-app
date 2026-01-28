@@ -106,10 +106,7 @@ export function AdminSidebar({ user, signOutAction }: AdminSidebarProps) {
       <div className="fixed bottom-4 left-4 z-50 md:hidden">
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger asChild>
-            <Button
-              size="icon"
-              className="h-12 w-12 rounded-full shadow-lg"
-            >
+            <Button size="icon" className="h-12 w-12 rounded-full shadow-lg">
               <Menu className="h-5 w-5" />
               <span className="sr-only">Open admin menu</span>
             </Button>
