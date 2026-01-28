@@ -63,7 +63,7 @@ export function AdminLoginForm(): React.ReactElement {
 
   function handleSignIn(): void {
     setIsLoading(true);
-    signIn('google', { callbackUrl: '/admin/bookings' });
+    signIn('google', { callbackUrl: '/admin-tooling/bookings' });
   }
 
   const icon = isLoading ? <Spinner /> : <GoogleLogo />;
