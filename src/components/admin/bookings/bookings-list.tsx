@@ -1,7 +1,7 @@
 'use client';
 
 import type { BookingStatus } from '@prisma/client';
-import { Search } from 'lucide-react';
+import { ChevronDown, ChevronRight, Search } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import {
   useCallback,
@@ -10,6 +10,8 @@ import {
   useState,
   useTransition,
 } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import {
   Select,
@@ -106,6 +108,7 @@ export function BookingsList({ bookings }: BookingsListProps) {
   const search = searchParams.get('search') || '';
 
   const [searchInput, setSearchInput] = useState(search);
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
   const updateParams = useCallback(
     (key: string, value: string): void => {
@@ -177,19 +180,97 @@ export function BookingsList({ bookings }: BookingsListProps) {
     return result;
   }, [bookings, status, datePreset, sort, search]);
 
+  const hasActiveFilters =
+    status !== 'all' || datePreset !== 'all' || sort !== 'date-desc';
+
   return (
     <div className="space-y-4">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      {/* Search and Filters */}
+      <div className="space-y-3">
+        {/* Search - always visible */}
         <div className="relative">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
             placeholder="Search by name or email..."
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
-            className="w-full pl-9 sm:w-64 border-2 border-gray-300 focus-visible:border-primary"
+            className="w-full pl-9 border-2 border-gray-300 focus-visible:border-primary"
           />
         </div>
-        <div className="flex flex-wrap gap-2">
+
+        {/* Mobile: Collapsible filters */}
+        <div className="md:hidden">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setFiltersOpen(!filtersOpen)}
+            className="w-full justify-between border-2 border-gray-300"
+          >
+            <span className="flex items-center gap-2">
+              Filters
+              {hasActiveFilters && (
+                <span className="h-2 w-2 rounded-full bg-primary" />
+              )}
+            </span>
+            {filtersOpen ? (
+              <ChevronDown className="h-4 w-4" />
+            ) : (
+              <ChevronRight className="h-4 w-4" />
+            )}
+          </Button>
+          {filtersOpen && (
+            <div className="mt-2 flex flex-col gap-2">
+              <Select
+                value={status}
+                onValueChange={(v) => updateParams('status', v)}
+              >
+                <SelectTrigger className="w-full border-2 border-gray-300 focus-visible:border-primary">
+                  <SelectValue placeholder="Status" />
+                </SelectTrigger>
+                <SelectContent>
+                  {STATUS_OPTIONS.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Select
+                value={datePreset}
+                onValueChange={(v) => updateParams('date', v)}
+              >
+                <SelectTrigger className="w-full border-2 border-gray-300 focus-visible:border-primary">
+                  <SelectValue placeholder="Date range" />
+                </SelectTrigger>
+                <SelectContent>
+                  {DATE_PRESETS.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Select
+                value={sort}
+                onValueChange={(v) => updateParams('sort', v)}
+              >
+                <SelectTrigger className="w-full border-2 border-gray-300 focus-visible:border-primary">
+                  <SelectValue placeholder="Sort by" />
+                </SelectTrigger>
+                <SelectContent>
+                  {SORT_OPTIONS.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          )}
+        </div>
+
+        {/* Desktop: Inline filters */}
+        <div className="hidden md:flex md:flex-wrap md:gap-2">
           <Select
             value={status}
             onValueChange={(v) => updateParams('status', v)}
@@ -235,7 +316,40 @@ export function BookingsList({ bookings }: BookingsListProps) {
         </div>
       </div>
 
-      <div className="rounded-md border bg-background">
+      {/* Mobile: Card-based list */}
+      <div className="space-y-3 md:hidden">
+        {filteredBookings.length === 0 ? (
+          <Card className="p-6 text-center text-muted-foreground">
+            No bookings found.
+          </Card>
+        ) : (
+          filteredBookings.map((booking) => (
+            <Card
+              key={booking.id}
+              className="cursor-pointer p-4 transition-colors hover:bg-muted/50 active:bg-muted"
+              onClick={() =>
+                router.push(`/admin-tooling/bookings/${booking.id}`)
+              }
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0 flex-1">
+                  <p className="font-medium">
+                    {booking.firstName} {booking.lastName}
+                  </p>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    {formatDate(booking.appointmentStart)} at{' '}
+                    {formatTime(booking.appointmentStart)}
+                  </p>
+                </div>
+                <BookingStatusBadge status={booking.status} />
+              </div>
+            </Card>
+          ))
+        )}
+      </div>
+
+      {/* Desktop: Table view */}
+      <div className="hidden rounded-md border bg-background md:block">
         <Table>
           <TableHeader>
             <TableRow>
