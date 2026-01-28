@@ -8,8 +8,8 @@ const serviceImages = [
 
 const serviceTypes = [
   { label: 'Ambulatory', description: 'Walk-on service' },
-  { label: 'Wheelchair', description: 'Wheelchair accessible vehicles' },
   { label: 'Companion 16+', description: 'Ride with a companion' },
+  { label: 'Wheelchair', description: 'Wheelchair accessible vehicles' },
 ];
 
 const servicesList = [

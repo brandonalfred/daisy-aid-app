@@ -1,5 +1,4 @@
 import { MapPin, Phone } from 'lucide-react';
-import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 
@@ -61,15 +60,6 @@ export function PricingArea() {
                     {county}
                   </div>
                 ))}
-              </div>
-
-              <div className="relative mt-8 h-64 overflow-hidden rounded-xl bg-beige-dark">
-                <Image
-                  src="/houston-map.jpg"
-                  alt="Houston area service map showing Harris, Fort Bend, Montgomery, Brazoria, Galveston, and Waller counties"
-                  fill
-                  className="object-cover"
-                />
               </div>
             </CardContent>
           </Card>
