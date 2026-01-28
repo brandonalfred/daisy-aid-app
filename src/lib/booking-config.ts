@@ -9,7 +9,7 @@ export const CALENDAR_CONFIG = {
   workingHoursStart: 8,
   workingHoursEnd: 16,
   slotDurationHours: 1,
-  bookingWindowDays: 21,
+  maxBookingMonths: 3,
 } as const;
 
 export function formatSlotTime(time: string): string {
