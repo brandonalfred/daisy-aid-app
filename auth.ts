@@ -3,6 +3,7 @@ import Google from 'next-auth/providers/google';
 import { prisma } from '@/lib/prisma';
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+  trustHost: true,
   providers: [
     Google({
       clientId: process.env.AUTH_GOOGLE_ID,
@@ -32,7 +33,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         data: { lastLoginAt: new Date() },
       });
 
-      return '/admin/bookings';
+      return true;
     },
     async jwt({ token, user }) {
       if (user?.email) {
