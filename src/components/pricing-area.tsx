@@ -29,11 +29,7 @@ export function PricingArea() {
                 We believe in honest, upfront pricing. Call us for a quote
                 tailored to your specific transportation needs.
               </p>
-              <Button
-                asChild
-                className="mt-8 bg-amber-400 text-zinc-900 hover:bg-amber-300"
-                size="lg"
-              >
+              <Button asChild variant="cta" size="lg" className="mt-8">
                 <a href="tel:832-598-4858" className="flex items-center gap-2">
                   <Phone className="h-5 w-5" />
                   Call for Quote

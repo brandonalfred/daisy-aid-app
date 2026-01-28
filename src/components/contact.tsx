@@ -183,8 +183,9 @@ export function Contact() {
 
                   <Button
                     type="submit"
-                    className="w-full bg-amber-400 text-zinc-900 hover:bg-amber-300"
+                    variant="cta"
                     size="lg"
+                    className="w-full"
                   >
                     Send Message
                   </Button>
