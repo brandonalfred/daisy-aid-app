@@ -32,7 +32,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         data: { lastLoginAt: new Date() },
       });
 
-      return true;
+      return '/admin/bookings';
     },
     async jwt({ token, user }) {
       if (user?.email) {
