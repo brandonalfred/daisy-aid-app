@@ -1,8 +1,5 @@
 import { z } from 'zod';
-
-function capitalizeFirstLetter(name: string): string {
-  return name.charAt(0).toUpperCase() + name.slice(1);
-}
+import { capitalizeFirstLetter } from '@/lib/utils';
 
 export const bookingFormSchema = z.object({
   firstName: z

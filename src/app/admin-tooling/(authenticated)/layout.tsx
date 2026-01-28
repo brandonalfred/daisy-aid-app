@@ -11,14 +11,14 @@ export default async function AdminAuthenticatedLayout({
   const session = await auth();
 
   if (!session?.user) {
-    redirect('/admin/login');
+    redirect('/admin-tooling/login');
   }
 
   const { user } = session;
 
   const signOutAction = async () => {
     'use server';
-    await signOut({ redirectTo: '/admin/login' });
+    await signOut({ redirectTo: '/admin-tooling/login' });
   };
 
   return (

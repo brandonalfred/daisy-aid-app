@@ -11,8 +11,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
   ],
   pages: {
-    signIn: '/admin/login',
-    error: '/admin/login',
+    signIn: '/admin-tooling/login',
+    error: '/admin-tooling/login',
   },
   callbacks: {
     async signIn({ user }) {
@@ -20,12 +20,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         return false;
       }
 
-      const admin = await prisma.admin.findUnique({
-        where: { email: user.email },
+      const admin = await prisma.admin.findFirst({
+        where: { email: user.email, deletedAt: null },
       });
 
       if (!admin) {
-        return '/admin/login?error=AccessDenied';
+        return '/admin-tooling/login?error=AccessDenied';
       }
 
       await prisma.admin.update({
@@ -37,8 +37,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
     async jwt({ token, user }) {
       if (user?.email) {
-        const admin = await prisma.admin.findUnique({
-          where: { email: user.email },
+        const admin = await prisma.admin.findFirst({
+          where: { email: user.email, deletedAt: null },
         });
 
         if (admin) {

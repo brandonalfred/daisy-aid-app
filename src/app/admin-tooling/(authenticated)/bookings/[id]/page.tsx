@@ -51,7 +51,7 @@ export default async function BookingDetailPage({
     <div className="space-y-6">
       <div className="flex items-center gap-4">
         <Button variant="ghost" size="icon" asChild>
-          <Link href="/admin/bookings">
+          <Link href="/admin-tooling/bookings">
             <ArrowLeft className="h-4 w-4" />
             <span className="sr-only">Back to bookings</span>
           </Link>

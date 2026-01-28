@@ -262,7 +262,9 @@ export function BookingsList({ bookings }: BookingsListProps) {
                 <TableRow
                   key={booking.id}
                   className="cursor-pointer"
-                  onClick={() => router.push(`/admin/bookings/${booking.id}`)}
+                  onClick={() =>
+                    router.push(`/admin-tooling/bookings/${booking.id}`)
+                  }
                 >
                   <TableCell className="font-medium">
                     {booking.firstName} {booking.lastName}

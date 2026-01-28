@@ -10,7 +10,7 @@ const navLinks = [
   { label: 'Services', href: '#services' },
   { label: 'About', href: '#' },
   { label: 'Social', href: '#contact' },
-  { label: 'Admin Login', href: '/admin/login' },
+  { label: 'Admin Login', href: '/admin-tooling/login' },
 ];
 
 export function Header() {
