@@ -3,6 +3,9 @@ import { auth, signOut } from '@/auth';
 import { AdminSidebar } from '@/components/admin/admin-sidebar';
 import { Header } from '@/components/header';
 
+// TODO: Remove this bypass before merging
+const BYPASS_AUTH = true;
+
 export default async function AdminAuthenticatedLayout({
   children,
 }: {
@@ -10,11 +13,15 @@ export default async function AdminAuthenticatedLayout({
 }) {
   const session = await auth();
 
-  if (!session?.user) {
+  if (!BYPASS_AUTH && !session?.user) {
     redirect('/admin-tooling/login');
   }
 
-  const { user } = session;
+  const user = session?.user ?? {
+    firstName: 'Test',
+    lastName: 'User',
+    email: 'test@example.com',
+  };
 
   const signOutAction = async () => {
     'use server';
