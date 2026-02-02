@@ -3,6 +3,7 @@ import { toZonedTime } from 'date-fns-tz';
 import { NextResponse } from 'next/server';
 import { formatError } from '@/lib/api-utils';
 import { CALENDAR_CONFIG } from '@/lib/booking-config';
+import { sendBookingConfirmationEmail } from '@/lib/email';
 import {
   generateTimeSlots,
   getCalendarBusyTimes,
@@ -93,6 +94,13 @@ export async function POST(request: Request) {
         appointmentEnd: slotEndUTC,
         status: 'PENDING',
       },
+    });
+
+    sendBookingConfirmationEmail({
+      to: contactInfo.email,
+      firstName: contactInfo.firstName,
+      bookingId: booking.id,
+      appointmentStart: booking.appointmentStart,
     });
 
     return NextResponse.json({
