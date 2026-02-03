@@ -4,7 +4,7 @@ import { toZonedTime } from 'date-fns-tz';
 import { CALENDAR_CONFIG } from './booking-config';
 
 const TEMPLATE_ID = 'd-323583db48fa44ebae38b6554cd48559';
-const FROM_EMAIL = 'noreply@daisyaidnemt.com';
+const FROM_EMAIL = 'brandonalfred32@gmail.com';
 const FROM_NAME = 'Daisy Aid';
 
 if (process.env.SENDGRID_API_KEY) {
